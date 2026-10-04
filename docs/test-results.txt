@@ -1,0 +1,28 @@
+Admin
+PASS  Sanitize clamps and drops bad values
+PASS  Settings page requires manage options
+PASS  Requests cannot be created by hand
+PASS  Status saves with nonce and capability
+PASS  Status ignored without nonce or for subscribers
+PASS  Shortcode and block render the form with a nonce
+PASS  Service tiles use the singular unit
+Pricing
+PASS  Basic window job
+PASS  Two story multiplier
+PASS  Minimum visit charge applies
+PASS  Extras and quarterly discount
+PASS  Extra for another service is ignored
+PASS  Unknown or disabled service is rejected
+PASS  Quantity bounds
+Submission
+PASS  Valid request is stored with a server side estimate
+PASS  Owner and customer emails are sent
+PASS  Customer copy can be turned off
+PASS  Bad nonce is rejected and nothing is stored
+PASS  Honeypot returns ok but stores nothing
+PASS  Rate limit after five requests per connection
+PASS  Invalid fields come back as errors with the input kept
+PASS  Markup is escaped not stored raw
+Uninstall
+PASS  Uninstall removes settings requests and transients
+OK (23 tests, 70 assertions)

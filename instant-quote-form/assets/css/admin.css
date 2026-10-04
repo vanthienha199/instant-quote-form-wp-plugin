@@ -1,0 +1,36 @@
+.iqf-wrap .iqf-lede { font-size: 14px; color: #50575e; max-width: 760px; }
+.iqf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; max-width: 1100px; }
+.iqf-card { background: #fff; border: 1px solid #dcdcde; border-radius: 8px; padding: 20px 24px; }
+.iqf-card h2 { font-size: 14px; margin: 0 0 12px; }
+.iqf-card h2 + * { margin-top: 0; }
+.iqf-card h2:not(:first-child) { margin-top: 20px; }
+.iqf-wide { grid-column: 1 / -1; }
+.iqf-rates { width: 100%; border-collapse: collapse; }
+.iqf-rates th { text-align: left; font-weight: 600; font-size: 12px; color: #50575e; padding: 0 8px 8px; }
+.iqf-rates td { padding: 6px 8px; border-top: 1px solid #f0f0f1; }
+.iqf-rates input[type=text] { width: 100%; }
+.iqf-rates .num input { width: 100px; text-align: right; }
+.iqf-rates .num { text-align: right; }
+.iqf-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-top: 1px solid #f0f0f1; }
+.iqf-row input { width: 80px; text-align: right; }
+.iqf-suffix, .iqf-prefix { display: inline-flex; align-items: center; gap: 4px; color: #50575e; }
+.iqf-field { display: grid; gap: 4px; margin-bottom: 12px; font-weight: 500; }
+.iqf-field input[type=text], .iqf-field input[type=email], .iqf-field textarea { width: 100%; }
+.iqf-check { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+.iqf-muted { color: #646970; }
+.iqf-money { font-variant-numeric: tabular-nums; font-weight: 600; }
+.iqf-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.iqf-new { background: #fcf0e3; color: #8a4b08; }
+.iqf-contacted { background: #e5f0fa; color: #1e4f7a; }
+.iqf-booked { background: #e3f3ea; color: #1d6b40; }
+.iqf-closed { background: #f0f0f1; color: #50575e; }
+.column-iqf_total, .column-iqf_status { width: 110px; }
+.column-iqf_when { width: 130px; }
+.iqf-details { border-collapse: collapse; width: 100%; max-width: 640px; }
+.iqf-details th { text-align: left; width: 160px; padding: 6px 0; color: #50575e; font-weight: 500; vertical-align: top; }
+.iqf-details td { padding: 6px 0; }
+.iqf-lines { border-collapse: collapse; width: 100%; max-width: 480px; }
+.iqf-lines td { padding: 6px 0; border-top: 1px solid #f0f0f1; }
+.iqf-lines .num { text-align: right; font-variant-numeric: tabular-nums; }
+.iqf-lines .total td { font-weight: 700; border-top: 2px solid #1d2327; }
+@media (max-width: 960px) { .iqf-grid { grid-template-columns: 1fr; } }

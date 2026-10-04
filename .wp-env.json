@@ -1,0 +1,8 @@
+{
+  "phpVersion": "8.2",
+  "plugins": [ "./instant-quote-form" ],
+  "port": 8890,
+  "testsPort": 8891,
+  "mappings": { "wp-content/iqf-dev": "." },
+  "config": { "WP_DEBUG": true, "SCRIPT_DEBUG": false }
+}

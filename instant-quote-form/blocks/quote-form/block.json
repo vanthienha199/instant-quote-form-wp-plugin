@@ -1,0 +1,16 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "instant-quote-form/quote-form",
+  "title": "Instant Quote",
+  "category": "widgets",
+  "icon": "calculator",
+  "description": "A quote request form with a live price estimate.",
+  "keywords": ["quote", "estimate", "booking", "form"],
+  "textdomain": "instant-quote-form",
+  "attributes": {
+    "heading": { "type": "string", "default": "Get an instant estimate" },
+    "intro": { "type": "string", "default": "" }
+  },
+  "supports": { "html": false, "align": ["wide", "full"] }
+}
