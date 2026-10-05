@@ -22,7 +22,7 @@ class IQF_Form {
 	public static function init() {
 		add_shortcode( 'instant_quote', array( __CLASS__, 'shortcode' ) );
 		add_action( 'init', array( __CLASS__, 'register_block' ) );
-		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'register_assets' ) );
+		add_action( 'init', array( __CLASS__, 'register_assets' ), 5 );
 		add_action( 'admin_post_nopriv_' . self::ACTION, array( __CLASS__, 'handle' ) );
 		add_action( 'admin_post_' . self::ACTION, array( __CLASS__, 'handle' ) );
 	}
@@ -51,6 +51,7 @@ class IQF_Form {
 			array(
 				'render_callback' => array( __CLASS__, 'render_block' ),
 				'editor_script'   => 'iqf-block-editor',
+				'style'           => 'iqf-form',
 			)
 		);
 	}
@@ -61,12 +62,13 @@ class IQF_Form {
 	 * @param array $attrs Block attributes.
 	 */
 	public static function render_block( $attrs ) {
-		return self::render(
+		// The wrapper carries the block's alignment class (wide or full) from the editor.
+		return '<div ' . get_block_wrapper_attributes() . '>' . self::render(
 			array(
 				'heading' => $attrs['heading'] ?? '',
 				'intro'   => $attrs['intro'] ?? '',
 			)
-		);
+		) . '</div>';
 	}
 
 	/**
@@ -150,8 +152,8 @@ class IQF_Form {
 
 					<div class="iqf-cols">
 						<fieldset class="iqf-job">
-							<legend><?php esc_html_e( 'The job', 'instant-quote-form' ); ?></legend>
-							<div class="iqf-services" role="radiogroup">
+							<legend class="iqf-sr"><?php esc_html_e( 'The job', 'instant-quote-form' ); ?></legend>
+							<div class="iqf-services" role="radiogroup" aria-label="<?php esc_attr_e( 'Service', 'instant-quote-form' ); ?>">
 								<?php
 								$first = true;
 								foreach ( $services as $key => $svc ) :
@@ -160,31 +162,64 @@ class IQF_Form {
 									?>
 									<label class="iqf-service">
 										<input type="radio" name="service" value="<?php echo esc_attr( $key ); ?>" <?php checked( $checked ); ?>>
-										<span><b><?php echo esc_html( $svc['label'] ); ?></b><small>
-											<?php
-											/* translators: 1: price, 2: unit. */
-											echo esc_html( sprintf( __( 'from %1$s per %2$s', 'instant-quote-form' ), IQF_Pricing::money( $svc['price'], $s ), $svc['unit_one'] ) );
-											?>
-										</small></span>
+										<span><?php echo esc_html( $svc['label'] ); ?></span>
 									</label>
 								<?php endforeach; ?>
 							</div>
-							<div class="iqf-row2">
-								<label><span data-iqf-unit><?php esc_html_e( 'How many', 'instant-quote-form' ); ?></span>
-									<input type="number" name="quantity" min="1" inputmode="numeric" required value="<?php echo esc_attr( $val( 'quantity', 24 ) ); ?>"></label>
-								<label><?php esc_html_e( 'Stories', 'instant-quote-form' ); ?>
-									<select name="stories">
-										<?php foreach ( array( 1, 2, 3 ) as $n ) : ?>
-											<option value="<?php echo (int) $n; ?>" <?php selected( (int) $val( 'stories', 1 ), $n ); ?>><?php echo (int) $n; ?></option>
-										<?php endforeach; ?>
-									</select></label>
-								<label><?php esc_html_e( 'How often', 'instant-quote-form' ); ?>
-									<select name="frequency">
-										<option value="once" <?php selected( $val( 'frequency', 'once' ), 'once' ); ?>><?php esc_html_e( 'One time', 'instant-quote-form' ); ?></option>
-										<option value="quarterly" <?php selected( $val( 'frequency' ), 'quarterly' ); ?>><?php echo esc_html( sprintf( /* translators: %s: percent */ __( 'Quarterly, save %s%%', 'instant-quote-form' ), $s['frequency_discounts']['quarterly'] ) ); ?></option>
-										<option value="monthly" <?php selected( $val( 'frequency' ), 'monthly' ); ?>><?php echo esc_html( sprintf( /* translators: %s: percent */ __( 'Monthly, save %s%%', 'instant-quote-form' ), $s['frequency_discounts']['monthly'] ) ); ?></option>
-									</select></label>
+
+							<p class="iqf-step"><?php esc_html_e( 'Your house', 'instant-quote-form' ); ?></p>
+							<div class="iqf-houses" role="radiogroup" aria-label="<?php esc_attr_e( 'House type', 'instant-quote-form' ); ?>">
+								<?php
+								$houses = array(
+									1 => array( __( 'One story', 'instant-quote-form' ), 'M8 62V34L48 12l40 22v28M8 62h80M40 62V46h16v16M18 40h12v10H18zM66 40h12v10H66z' ),
+									2 => array( __( 'Two stories', 'instant-quote-form' ), 'M14 62V28L48 6l34 22v34M14 62h68M42 62V48h12v14M22 34h10v9H22zM64 34h10v9H64zM22 48h10v9H22zM64 48h10v9H64z' ),
+									3 => array( __( 'Three stories', 'instant-quote-form' ), 'M22 62V20L48 4l26 16v42M22 62h52M43 62V52h10v10M29 24h8v7h-8zM59 24h8v7h-8zM29 36h8v7h-8zM59 36h8v7h-8zM29 48h8v7h-8zM59 48h8v7h-8z' ),
+								);
+								foreach ( $houses as $n => $house ) :
+									?>
+									<label class="iqf-house">
+										<input type="radio" name="stories" value="<?php echo (int) $n; ?>" <?php checked( (int) $val( 'stories', 1 ), $n ); ?>>
+										<span><svg viewBox="0 0 96 68" aria-hidden="true"><path d="<?php echo esc_attr( $house[1] ); ?>"/></svg><?php echo esc_html( $house[0] ); ?></span>
+									</label>
+								<?php endforeach; ?>
 							</div>
+
+							<div class="iqf-qty">
+								<label for="iqf-quantity" class="iqf-step" data-iqf-unit><?php esc_html_e( 'How many', 'instant-quote-form' ); ?></label>
+								<div class="iqf-stepper">
+									<button type="button" data-iqf-step="-1" aria-label="<?php esc_attr_e( 'Fewer', 'instant-quote-form' ); ?>">&minus;</button>
+									<input id="iqf-quantity" type="number" name="quantity" min="1" inputmode="numeric" required value="<?php echo esc_attr( $val( 'quantity', 24 ) ); ?>">
+									<button type="button" data-iqf-step="1" aria-label="<?php esc_attr_e( 'More', 'instant-quote-form' ); ?>">+</button>
+								</div>
+								<?php
+								$active = $val( 'service' ) ? $val( 'service' ) : (string) array_key_first( $services );
+								foreach ( $services as $key => $svc ) :
+									?>
+									<span class="iqf-rate" data-iqf-rate="<?php echo esc_attr( $key ); ?>" <?php echo $key === $active ? '' : 'hidden'; ?>>
+										<?php
+										/* translators: 1: price, 2: unit. */
+										echo esc_html( sprintf( __( 'from %1$s per %2$s', 'instant-quote-form' ), IQF_Pricing::money( $svc['price'], $s ), $svc['unit_one'] ) );
+										?>
+									</span>
+								<?php endforeach; ?>
+							</div>
+
+							<p class="iqf-step"><?php esc_html_e( 'How often', 'instant-quote-form' ); ?></p>
+							<div class="iqf-freq" role="radiogroup" aria-label="<?php esc_attr_e( 'How often', 'instant-quote-form' ); ?>">
+								<?php
+								$freqs = array(
+									'once'      => __( 'One time', 'instant-quote-form' ),
+									/* translators: %s: percent */
+									'quarterly' => sprintf( __( 'Quarterly, save %s%%', 'instant-quote-form' ), $s['frequency_discounts']['quarterly'] ),
+									/* translators: %s: percent */
+									'monthly'   => sprintf( __( 'Monthly, save %s%%', 'instant-quote-form' ), $s['frequency_discounts']['monthly'] ),
+								);
+								foreach ( $freqs as $f => $label ) :
+									?>
+									<label><input type="radio" name="frequency" value="<?php echo esc_attr( $f ); ?>" <?php checked( $val( 'frequency', 'once' ), $f ); ?>><span><?php echo esc_html( $label ); ?></span></label>
+								<?php endforeach; ?>
+							</div>
+
 							<div class="iqf-extras">
 								<?php foreach ( $s['extras'] as $key => $ex ) : ?>
 									<label class="iqf-extra" data-services="<?php echo esc_attr( implode( ' ', $ex['services'] ) ); ?>">
@@ -198,8 +233,26 @@ class IQF_Form {
 
 						<aside class="iqf-estimate" aria-live="polite">
 							<span class="iqf-est-label"><?php esc_html_e( 'Your estimate', 'instant-quote-form' ); ?></span>
-							<output class="iqf-total" data-iqf-total>-</output>
-							<ul class="iqf-breakdown" data-iqf-lines></ul>
+							<?php
+							$start = IQF_Pricing::estimate(
+								array(
+									'service'   => $val( 'service' ) ? $val( 'service' ) : (string) array_key_first( $services ),
+									'quantity'  => $val( 'quantity', 24 ),
+									'stories'   => $val( 'stories', 1 ),
+									'frequency' => $val( 'frequency', 'once' ),
+									'extras'    => (array) $val( 'extras', array() ),
+								),
+								$s
+							);
+							?>
+							<output class="iqf-total" data-iqf-total><?php echo is_wp_error( $start ) ? '-' : esc_html( IQF_Pricing::money( $start['total'], $s ) ); ?></output>
+							<ul class="iqf-breakdown" data-iqf-lines>
+								<?php if ( ! is_wp_error( $start ) ) : ?>
+									<?php foreach ( $start['lines'] as $line ) : ?>
+										<li><span><?php echo esc_html( $line['label'] ); ?></span><b><?php echo esc_html( IQF_Pricing::money( $line['amount'], $s ) ); ?></b></li>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</ul>
 							<p class="iqf-fine"><?php esc_html_e( 'Final price is confirmed after a quick look at the property.', 'instant-quote-form' ); ?></p>
 						</aside>
 					</div>

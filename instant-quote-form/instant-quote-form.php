@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Instant Quote Form
  * Description:       A quote request form with a live price estimate, a submissions inbox in the admin, email alerts and editable rates. Sample plugin built for a fictional window and gutter cleaning company.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Author:            Ha Le
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'IQF_VERSION', '1.0.0' );
+define( 'IQF_VERSION', '1.1.0' );
 define( 'IQF_FILE', __FILE__ );
 define( 'IQF_DIR', plugin_dir_path( __FILE__ ) );
 define( 'IQF_URL', plugin_dir_url( __FILE__ ) );

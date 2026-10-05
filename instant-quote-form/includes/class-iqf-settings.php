@@ -30,7 +30,7 @@ class IQF_Settings {
 	 */
 	public static function defaults() {
 		return array(
-			'company'             => 'Fernhill Window & Gutter',
+			'company'             => 'Ruiz Window Co.',
 			'notify_email'        => get_option( 'admin_email' ),
 			'customer_copy'       => 1,
 			'currency'            => '$',

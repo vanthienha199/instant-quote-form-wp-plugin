@@ -1,0 +1,3 @@
+Familjen Grotesk (Familjen STHLM AB) and Source Sans 3 (Adobe) are licensed under the SIL Open Font License 1.1.
+Files from the @fontsource/familjen-grotesk and @fontsource/source-sans-3 packages.
+https://openfontlicense.org

@@ -79,4 +79,20 @@ class Test_IQF_Admin extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'per foot of gutter', $html );
 		$this->assertStringNotContainsString( 'per feet of gutter', $html );
 	}
+
+	public function test_calculator_offers_house_types_and_a_window_stepper() {
+		$html = do_shortcode( '[instant_quote]' );
+		foreach ( array( 1, 2, 3 ) as $n ) {
+			$this->assertStringContainsString( 'name="stories" value="' . $n . '"', $html );
+		}
+		$this->assertStringContainsString( 'data-iqf-step="-1"', $html );
+		$this->assertStringContainsString( 'data-iqf-step="1"', $html );
+		$this->assertStringContainsString( 'name="frequency" value="quarterly"', $html );
+	}
+
+	public function test_starting_estimate_is_rendered_on_the_server() {
+		$html = do_shortcode( '[instant_quote]' );
+		// 24 windows at $6.75 on a one story house, one time.
+		$this->assertMatchesRegularExpression( '/data-iqf-total>\$162\.00</', $html );
+	}
 }

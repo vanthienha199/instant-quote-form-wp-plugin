@@ -4,7 +4,7 @@ Tags: quote, estimate, booking, form, calculator
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,10 @@ Security: every submit is checked with a nonce, a hidden honeypot field and a pe
 No. Deleting it removes its settings, every stored request and its temporary data.
 
 == Changelog ==
+
+= 1.1.0 =
+* One-card calculator: house type as line drawings, a window stepper and a live price that rolls on change.
+* Bundled Familjen Grotesk and Source Sans 3 (SIL Open Font License).
 
 = 1.0.0 =
 * First release.

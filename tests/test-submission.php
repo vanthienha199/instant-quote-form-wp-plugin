@@ -12,9 +12,9 @@ class Test_IQF_Submission extends WP_UnitTestCase {
 		reset_phpmailer_instance();
 		// The test site runs on localhost, and PHPMailer rejects wordpress@localhost as a sender.
 		add_filter( 'wp_mail_from', static function () {
-			return 'wordpress@fernhill.test';
+			return 'wordpress@ruizwindows.test';
 		} );
-		update_option( IQF_Settings::OPTION, array_merge( IQF_Settings::defaults(), array( 'notify_email' => 'owner@fernhill.test' ) ) );
+		update_option( IQF_Settings::OPTION, array_merge( IQF_Settings::defaults(), array( 'notify_email' => 'owner@ruizwindows.test' ) ) );
 	}
 
 	private function post( array $over = array() ) {
@@ -50,7 +50,7 @@ class Test_IQF_Submission extends WP_UnitTestCase {
 	public function test_owner_and_customer_emails_are_sent() {
 		IQF_Form::process( $this->post(), '203.0.113.8' );
 		$mailer = tests_retrieve_phpmailer_instance();
-		$this->assertSame( 'owner@fernhill.test', $mailer->get_recipient( 'to', 0 )->address );
+		$this->assertSame( 'owner@ruizwindows.test', $mailer->get_recipient( 'to', 0 )->address );
 		$this->assertStringContainsString( 'Gutter cleaning for Dana Whitlock', $mailer->get_sent( 0 )->subject );
 		$this->assertStringContainsString( '314.45', $mailer->get_sent( 0 )->body );
 		$this->assertSame( 'dana.whitlock@example.com', $mailer->get_recipient( 'to', 1 )->address );
